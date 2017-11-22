@@ -8,40 +8,40 @@ typedef struct word
     char text;
     struct word *next, *prev;
 }word;
-word *head=NULL,*tail=NULL,*temp=NULL,*act=NULL;
+word *Kepala=NULL,*Ekor=NULL,*temp=NULL,*gerak=NULL;
 
 void add()
 {
     temp=(word*)malloc(sizeof(word));
-    if(head!=NULL)
+    if(kepala!=NULL)
     {
-        if(act!=tail)
+        if(gerak!=Ekor)
         {
-            temp->next=act->next;
-            temp->prev=act;
-            act->next->prev=temp;
-            act->next=temp;
-            act=act->next;
+            temp->next=gerak->next;
+            temp->prev=gerak;
+            gerak->next->prev=temp;
+            gerak->next=temp;
+            gerak=gerak->next;
         }
         else
         {
-            act->next=temp;
-            temp->prev=act;
+            gerak->next=temp;
+            temp->prev=gerak;
             temp->next=NULL;
-            act=act->next;
-            tail=act;
+            gerak=gerak->next;
+            Ekor=gerak;
         }
     }
     else
     {
-        head=temp;
-        head->next=NULL;
-        head->prev=NULL;
-        tail=temp;
-        act=temp;
+        Kepala=temp;
+        Kepala->next=NULL;
+        Kepala->prev=NULL;
+        Ekor=temp;
+        gerak=temp;
     }
     printf("Add : ");
-    scanf("%s",&act->text);
+    scanf("%s",&gerak->text);
 }
 
 void del()
@@ -49,50 +49,50 @@ void del()
     if(head==tail)
     {
         free(head);
-        head=NULL;
-        tail=NULL;
-        act=NULL;
+        Kepala=NULL;
+        Ekor=NULL;
+        gerak=NULL;
     }
-    else if(act==head)
+    else if(gerak==Kepala)
     {
-        act=act->next;
-        act->prev=NULL;
-        free(head);
-        head=act;
+        gerak=gerak->next;
+        gerak->prev=NULL;
+        free(Kepala);
+        Kepala=gerak;
     }
-    else if(act==tail)
+    else if(gerak==Ekor)
     {
-        act=act->prev;
-        act->next=NULL;
-        free(tail);
-        tail=act;
+        gerak=gerak->prev;
+        gerak->next=NULL;
+        free(Ekor);
+        Ekor=gerak;
     }
     else
     {
-        temp=act->prev;
-        act=act->next;
-        temp->next=act;
-        free(act->prev);
-        act->prev=temp;
+        temp=gerak->prev;
+        gerak=gerak->next;
+        temp->next=gerak;
+        free(gerak->prev);
+        gerak->prev=temp;
     }
 }
 void sleft()
 {
-    if(act->prev!=NULL)
-        act=act->prev;
+    if(gerak->prev!=NULL)
+        gerak=gerak->prev;
 }
 void sright()
 {
-    if(act->next!=NULL)
-        act=act->next;
+    if(gerak->next!=NULL)
+        gerak=gerak->next;
 }
 void view()
 {
     temp=NULL;
-    if(head!=NULL)
+    if(Kepala!=NULL)
     {
-        temp=head;
-        if(act==head&&act==tail)
+        temp=Kepala;
+        if(gerak==Kepala&&gerak==Ekor)
             printf("%c",temp->text);
         else
         {
